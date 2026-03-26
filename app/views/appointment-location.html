@@ -1,0 +1,44 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Which passport office location works best for you?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["appointment-location"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["appointment-location"], href: "#appointment-location" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "appointment-location",
+      fieldset: {
+        legend: {
+          text: "Which passport office location works best for you?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Choose the office closest to where you live or work." },
+      errorMessage: errors["appointment-location"] if errors else null,
+      value: data["appointment-location"],
+      items: [
+        { value: "london", text: "London" },
+        { value: "manchester", text: "Manchester" },
+        { value: "glasgow", text: "Glasgow" },
+        { value: "belfast", text: "Belfast" },
+        { value: "cardiff", text: "Cardiff" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
