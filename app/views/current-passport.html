@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Do you have your current passport with you?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["current-passport"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["current-passport"], href: "#current-passport" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "current-passport",
+      fieldset: {
+        legend: {
+          text: "Do you have your current passport with you?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "You must bring your current passport to your appointment." },
+      errorMessage: errors["current-passport"] if errors else null,
+      value: data["current-passport"],
+      items: [
+        { value: "yes", text: "Yes, I have my current passport" },
+        { value: "no", text: "No, I do not have my current passport" },
+        { value: "lost-stolen", text: "My passport is lost or stolen" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
