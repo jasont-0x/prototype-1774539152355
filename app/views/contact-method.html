@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "How would you like us to contact you about your appointment?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["contact-method"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["contact-method"], href: "#contact-method" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "contact-method",
+      fieldset: {
+        legend: {
+          text: "How would you like us to contact you about your appointment?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "We will contact you within 2 working days." },
+      errorMessage: errors["contact-method"] if errors else null,
+      value: data["contact-method"],
+      items: [
+        { value: "phone", text: "Phone call" },
+        { value: "text", text: "Text message" },
+        { value: "email", text: "Email" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
