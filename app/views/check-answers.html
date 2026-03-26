@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your answers before sending your request" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    <h1 class="govuk-heading-xl">Check your answers before sending your request</h1>
+
+    {{ govukSummaryList({
+      rows: [
+      {
+        key: { text: "When do you need to travel?" },
+        value: { text: data["travel-date"] if data["travel-date"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/travel-date",
+            text: "Change",
+            visuallyHiddenText: "when do you need to travel?"
+          }]
+        }
+      },
+      {
+        key: { text: "Tell us why you need your passport urgently" },
+        value: { text: data["urgency-details"] if data["urgency-details"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/urgency-details",
+            text: "Change",
+            visuallyHiddenText: "tell us why you need your passport urgently"
+          }]
+        }
+      },
+      {
+        key: { text: "Do you have your current passport with you?" },
+        value: { text: data["current-passport"] if data["current-passport"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/current-passport",
+            text: "Change",
+            visuallyHiddenText: "do you have your current passport with you?"
+          }]
+        }
+      },
+      {
+        key: { text: "Which passport office location works best for you?" },
+        value: { text: data["appointment-location"] if data["appointment-location"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/appointment-location",
+            text: "Change",
+            visuallyHiddenText: "which passport office location works best for you?"
+          }]
+        }
+      },
+      {
+        key: { text: "How would you like us to contact you about your appointment?" },
+        value: { text: data["contact-method"] if data["contact-method"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/contact-method",
+            text: "Change",
+            visuallyHiddenText: "how would you like us to contact you about your appointment?"
+          }]
+        }
+      }
+      ]
+    }) }}
+
+    <form method="post" novalidate>
+      {{ govukButton({ text: "Confirm and send" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
